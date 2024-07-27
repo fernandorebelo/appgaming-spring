@@ -1,7 +1,9 @@
 package com.fernando.learn_spring_framework;
 
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 
 /* Eliminate verbosity in creating Java Beans
  * Automactly create public accessor methos, constructor
@@ -38,12 +40,25 @@ public class HelloWorldConfiguration {
 		return new Person(name, age, address3);
 	}
 	
+	@Bean
+	@Primary
+	public Person person4Parameters(String name, int age, Address address) {
+		return new Person(name, age, address);
+	}
+	
+	@Bean
+	public Person person5Qualifier(String name, int age, @Qualifier("address3qualifier") Address address) {
+		return new Person(name, age, address);
+	}
+	
 	@Bean(name = "address2")
+	@Primary
 	public Address address() {
 		return new Address("Rua Local", "Cidade");
 	}
 	
 	@Bean(name = "address3")
+	@Qualifier("address3qualifier")
 	public Address address3() {
 		return new Address("Rua da Amora", "Amoralandia");
 	}
